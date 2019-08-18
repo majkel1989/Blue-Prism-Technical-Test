@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blue_Prism_Technical_Test
+namespace BluePrismTechnicalTest
 {
     class Program
     {
