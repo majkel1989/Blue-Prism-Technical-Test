@@ -33,10 +33,6 @@ namespace BluePrismTechnicalTest.UI
 
             CreateMessage(new string[]{ "", "Give Result File Name", "Result File Name: "});
             parameters.ResultFile = ((FileValidationResult)GetValidResult(new OutputFileValidation<string>(parameters.DefaultDirectory, parameters.FileExtension))).FilePath;
-
-            var wordAlgorithm = new WordAlgorithm(parameters);
-            //wordAlgorithm.Invoke();
-            var result = wordAlgorithm.WordLadder(parameters.StartWord, parameters.EndWord, parameters.WordList.ToArray());
         }
 
         private ValidationResult GetValidResult(IParameterValidation<string> parameterValidation)
