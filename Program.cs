@@ -1,4 +1,4 @@
-﻿using System;
+﻿using BluePrismTechnicalTest.UI;
 
 namespace BluePrismTechnicalTest
 {
@@ -6,7 +6,8 @@ namespace BluePrismTechnicalTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IUserInterf interf = new ConsoleInterface();
+            interf.Init();
         }
     }
 }
