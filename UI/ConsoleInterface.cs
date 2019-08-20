@@ -1,7 +1,6 @@
 using System;
 using BluePrismTechnicalTest.DTO;
 using BluePrismTechnicalTest.Helpers;
-using BluePrismTechnicalTest.Logic;
 using BluePrismTechnicalTest.Validation;
 using System.Linq;
 
