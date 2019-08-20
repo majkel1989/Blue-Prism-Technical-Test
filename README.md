@@ -30,9 +30,9 @@ Added Parameters validation & updated parameters DTO to make sure UI is fully re
 
 # Algorithm Complexity
 
-Big Notation complexity (related to the algorithm code commented Steps):\
-1) While loop that checks if there is anything on the Queue before continue - worst possible scenario O(n) - can loop over all words in the dictionary\
-2) Foreach loop that iterates over all words that left in dictionary - worst possible scenario O(n - 1) - also can loop over all words in the dictionary but within each while loop iteration we delete at least 1 Word\
+Big Notation complexity (related to the algorithm code commented Steps):
+1) While loop that checks if there is anything on the Queue before continue - worst possible scenario O(n) - can loop over all words in the dictionary
+2) Foreach loop that iterates over all words that left in dictionary - worst possible scenario O(n - 1) - also can loop over all words in the dictionary but within each while loop iteration we delete at least 1 Word
 3) IsWordValid() method to check if Child Word is different only by 1 letter from Parent Word - always O(m) where 'm' is specified Length of our Words
 - Summing up our, worst case scenario, complexity is [O(n) * O(n - 1) * O(m)] which we can simplyfy to [O((n^2 - n) * m)]
 
