@@ -27,9 +27,9 @@ namespace BluePrismTechnicalTest.Helpers
             return wordList;
         }
 
-        public static void SaveWordList(string fileName, List<string> wordList)
+        public static void SaveWordList(string filePath, List<string> wordList)
         {
-            using (var streamWriter = new StreamWriter($@"C:\{fileName}.txt"))
+            using (var streamWriter = new StreamWriter(filePath))
             {
                 foreach (var word in wordList)
                 {

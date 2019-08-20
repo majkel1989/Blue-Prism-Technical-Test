@@ -1,8 +1,11 @@
 using System;
 using BluePrismTechnicalTest.DTO;
 using BluePrismTechnicalTest.Helpers;
+using BluePrismTechnicalTest.Logic;
 using BluePrismTechnicalTest.Validation;
 using System.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace BluePrismTechnicalTest.UI
 {
@@ -13,25 +16,48 @@ namespace BluePrismTechnicalTest.UI
             var wordLenght = 4;
             var fileExtension = ".txt";
             var defaultDirectory = Environment.CurrentDirectory;
-            var parameters = new Parameters(wordLenght, fileExtension, defaultDirectory);
+            var wordLetterDifferenceValue = 1;
+            var parameters = new Parameters(wordLenght, fileExtension, defaultDirectory, wordLetterDifferenceValue);
 
             CreateMessage(new string[] { "#########################################################",
                                          "############### Blue Prism Technical Test ###############",
                                          "#########################################################"});
 
-            CreateMessage(new string[]{"", "Give Dictionary File Name", "Dictionary File Name: "});
+            CreateMessage(new string[]{"", "Provide Dictionary File Name (can contain full path):" });
             parameters.DictionaryFile = ((FileValidationResult)GetValidResult(new InputFileValidation<string>(parameters.DefaultDirectory, parameters.FileExtension))).FilePath;
 
             parameters.WordList = DocumentHelper.GetWordList(parameters.DictionaryFile, parameters.WordLenght);
 
-            CreateMessage(new string[]{ "", "Give Start Word (Letter case does matter)", "Start Word: "});
-            parameters.StartWord = ((WordValidationResult)GetValidResult(new WordValidation<string>(parameters.WordLenght, parameters.WordList))).Word;
+            CreateMessage(new string[]{ "", "Provide Start Word (Letter case does matter):"});
+            parameters.StartWord = ((WordValidationResult)GetValidResult(new WordValidation<string>(parameters.WordLenght, parameters.WordList, new List<string>()))).Word;
 
-            CreateMessage(new string[]{ "", "Give End Word (Letter case does matter)", "End Word: "});
-            parameters.EndWord = ((WordValidationResult)GetValidResult(new WordValidation<string>(parameters.WordLenght, parameters.WordList))).Word;
+            CreateMessage(new string[]{ "", "Provide End Word (Letter case does matter):"});
+            parameters.EndWord = ((WordValidationResult)GetValidResult(new WordValidation<string>(parameters.WordLenght, parameters.WordList, new List<string>() { parameters.StartWord }))).Word;
 
-            CreateMessage(new string[]{ "", "Give Result File Name", "Result File Name: "});
+            CreateMessage(new string[]{ "", "Provide Result File Name (can contain full path):"});
             parameters.ResultFile = ((FileValidationResult)GetValidResult(new OutputFileValidation<string>(parameters.DefaultDirectory, parameters.FileExtension))).FilePath;
+
+            var wordAlgorithm = new WordAlgorithm(parameters);
+            var wordListResult = wordAlgorithm.GetWordAlgorithmResult();
+
+            CreateMessage(new string[] { "", "Result:" });
+            CreateMessage(wordListResult.ToArray());
+
+            DocumentHelper.SaveWordList(parameters.ResultFile, wordListResult);
+            
+            try
+            {
+                Process.Start("notepad.exe", parameters.ResultFile);
+            }
+            catch { }
+
+            CreateMessage(new string[] { "",
+                                         "#########################################################",
+                                         "############### Blue Prism Technical Test ###############",
+                                         "#########################################################"});
+
+            CreateMessage(new string[] { "", "Click any button to exit..." });
+            Console.ReadKey();
         }
 
         private ValidationResult GetValidResult(IParameterValidation<string> parameterValidation)

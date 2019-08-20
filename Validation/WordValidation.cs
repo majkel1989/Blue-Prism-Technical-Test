@@ -8,11 +8,13 @@ namespace BluePrismTechnicalTest.Validation
     {
         private int WordLenght { get; set; }
         private IEnumerable<string> WordList { get; set; }
+        private IEnumerable<string> SuppliedWords { get; set; }
 
-        public WordValidation(int wordLenght, IEnumerable<string> wordList)
+        public WordValidation(int wordLenght, IEnumerable<string> wordList, IEnumerable<string> suppliedWords)
         {
             WordLenght = wordLenght;
             WordList = wordList;
+            SuppliedWords = suppliedWords;
         }
 
         public ValidationResult IsValid(T parameter)
@@ -27,6 +29,10 @@ namespace BluePrismTechnicalTest.Validation
             else if (validationResult.Word.Length != WordLenght)
             {
                 errorMessages.Add($"Invalid: Word can be only {WordLenght} characters long");
+            }
+            else if (SuppliedWords.Any(w => w == validationResult.Word))
+            {
+                errorMessages.Add($"Invalid: Word '{validationResult.Word}' already supplied");
             }
             else if (!WordList.Any(w => w == validationResult.Word))
             {

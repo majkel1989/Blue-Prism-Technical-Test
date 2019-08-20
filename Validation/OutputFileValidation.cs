@@ -34,7 +34,7 @@ namespace BluePrismTechnicalTest.Validation
             }
             else if (File.Exists(validationResult.FilePath))
             {
-                errorMessages.Add($"Invalid: File '{validationResult.FilePath}' already exist");
+                errorMessages.Add($"Invalid: File '{Path.GetFileName(validationResult.FilePath)}' under given Directory already exist");
             }
 
             validationResult.ErrorMessages = errorMessages;
