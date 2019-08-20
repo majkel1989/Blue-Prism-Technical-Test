@@ -110,11 +110,7 @@ namespace BluePrismTechnicalTest.Logic
                 for (int i = topNodeLevel - 1; i > 0; i--)
                 {
                     var currentWordsTree = WordsTree.Where(r => r.Key.Value == i && r.Value.Any(v => v == result.Last()));
-
-                    foreach (var word in currentWordsTree)
-                    {
-                        result.Add(word.Key.Key);
-                    }
+                    result.Add(currentWordsTree.First().Key.Key);
                 }
             }
             else
